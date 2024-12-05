@@ -1,0 +1,29 @@
+{% extends 'consultorioCys/base_generic.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Solicitar Cita</h2>
+
+    <!-- Formulario para agendar la cita -->
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group mb-3">
+            <label for="id_fecha_cita">Fecha de la Cita</label>
+            {{ form.fecha_cita }}
+        </div>
+        <div class="form-group mb-3">
+            <label for="hora">Hora de la Cita</label>
+            {{ form.hora }}
+        </div>
+        <div class="form-group mb-3">
+            <label for="id_tratamiento">Tratamiento</label>
+            {{ form.tratamiento }}
+        </div>
+        <button type="submit" class="btn btn-primary">Solicitar Cita</button>
+    </form>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,184 @@
+/* Estilo General */
+body {
+    background-color: rgb(255, 255, 255);
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    height: 100%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Sticky Footer */
+}
+
+/* Contenido Principal */
+main {
+    flex: 1; /* El contenido principal se expande */
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+
+/* Footer */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    margin-top: auto; /* Empuja el footer hacia abajo */
+    position: relative; /* Sin necesidad de posición absoluta */
+}
+
+/* Estilo del Logo */
+.logo-img {
+    width: 120px;
+    height: auto;
+    object-fit: contain; /* Evita distorsiones */
+}
+
+@media (max-width: 576px) {
+    .logo-img {
+        width: 100px; /* Ajuste en pantallas pequeñas */
+    }
+}
+
+/* Estilo de Navegación */
+.nav-link {
+    transition: transform 0.5s ease, color 0.5s ease;
+}
+
+.nav-link:hover {
+    transform: scale(1.1);
+    color: #4A148C;
+}
+
+/* Estilo del Usuario */
+.user-welcome {
+    margin-right: 30px;
+    font-size: 16px;
+    color: #333;
+}
+
+.navbar {
+    position: relative;
+    z-index: 1030;
+}
+
+.dropdown-menu {
+    z-index: 1050;
+}
+
+/* Estilo de Carrusel */
+.carousel-item img {
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+}
+
+/* Barras e Íconos */
+.bar {
+    background-color: lightblue;
+    border-radius: 35px;
+}
+
+.icon {
+    width: 40px;
+    height: 40px;
+}
+
+/* Botones Personalizados */
+.button {
+    border: none;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 4px 2px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.button2 {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Párrafo Archivo */
+.parchivo {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Clases de Margen */
+.margen {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+/* Clase para Centrados */
+.center {
+    align-content: center;
+    text-align: center;
+    position: relative;
+    align-items: center;
+    top: 50%;
+}
+
+/* */
+
+.doctor-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.toggle-hours-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.hours-container {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.appointment-times {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 10px;
+}
+
+.time-slot {
+    background-color: #e0e0e0;
+    border: none;
+    padding: 8px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.time-slot:hover {
+    background-color: #007bff;
+    color: white;
+}

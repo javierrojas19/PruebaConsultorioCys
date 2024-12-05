@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ficha Médica del Paciente</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #e0f7fa; /* Color de fondo celeste claro */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .ficha-medica {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            animation: slideIn 1s ease-in-out; /* Animación de entrada */
+        }
+
+        h1 {
+            color: #00796b; /* Color celeste oscuro */
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 16px;
+            margin: 10px 0;
+            color: #006064; /* Color celeste */
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #00acc1; /* Color del botón */
+            color: #fff;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        a:hover {
+            background-color: #00838f; /* Color del botón al pasar el mouse */
+            transform: scale(1.05); /* Animación de escalado */
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ficha-medica">
+        <h1>Ficha Médica del Paciente</h1>
+        
+        <p><strong>RUT:</strong> {{ paciente.rut_paciente }}</p>
+        <p><strong>Nombre:</strong> {{ paciente.nombres_paciente }} {{ paciente.primer_apellido_paciente }} {{ paciente.segundo_apellido_paciente }}</p>
+        <p><strong>Correo:</strong> {{ paciente.correo_paciente }}</p>
+        <p><strong>Teléfono:</strong> {{ paciente.telefono_paciente }}</p>
+        <p><strong>Fecha de Nacimiento:</strong> {{ paciente.fecha_nacimiento_paciente }}</p>
+        <p><strong>Dirección:</strong> {{ paciente.direccion_paciente }}</p>
+        <p><strong>Género:</strong> {{ paciente.genero_paciente }}</p>
+        
+        <a href="{% url 'inicio' %}">Volver al inicio</a>
+    </div>
+
+</body>
+</html>
+

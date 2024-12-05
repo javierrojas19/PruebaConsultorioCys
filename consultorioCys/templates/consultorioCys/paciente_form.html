@@ -1,0 +1,81 @@
+{% extends 'consultorioCys/base_generic.html' %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    {% block head %}
+    <title>Formulario de Paciente</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            text-align: center;
+            color: #2c97de;
+            margin-top: 20px;
+            font-size: 24px;
+        }
+        form {
+            max-width: 600px;
+            margin: 30px auto;
+            background-color: #ffffff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        form label {
+            font-weight: bold;
+            color: #333333;
+        }
+        form input,
+        form select,
+        form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        form input:focus,
+        form select:focus,
+        form textarea:focus {
+            outline: none;
+            border-color: #2c97de;
+            box-shadow: 0 0 5px rgba(44, 151, 222, 0.5);
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: #0d6efd;
+            color: white;
+            font-size: 16px;
+            text-align: center;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #1b6fa0;
+        }
+    </style>
+    {% endblock %}
+</head>
+<body>
+    
+    {% block content %}   
+    
+    <h1>{{ form.instance.pk|yesno:"Editar Paciente,Agregar Paciente" }}</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn">Guardar</button>
+    </form>
+    {% endblock %}
+</body>
+</html>

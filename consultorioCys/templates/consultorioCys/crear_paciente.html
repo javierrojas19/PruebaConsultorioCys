@@ -1,0 +1,81 @@
+{% extends 'consultorioCys/base_generic.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container my-4 d-flex justify-content-center">
+    <div class="w-100" style="max-width: 500px;">
+        <form method="POST" enctype="multipart/form-data" class="p-3 bg-light rounded shadow">
+            {% csrf_token %}
+            <h3 class="text-center text-primary mb-3">Registrar Paciente</h3>
+
+            <!-- Rut -->
+            <div class="mb-2">
+                <label for="rut" class="form-label">RUT del paciente:</label>
+                <input type="text" name="rut" id="rut" class="form-control form-control-sm" placeholder="Ej: 12345678-9" required>
+            </div>
+
+            <!-- Nombres y Apellidos -->
+            <div class="row g-2">
+                <div class="col-md-6">
+                    <label for="nombres" class="form-label">Nombres:</label>
+                    <input type="text" name="nombres" id="nombres" class="form-control form-control-sm" placeholder="Nombres" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="primer_apellido" class="form-label">Primer Apellido:</label>
+                    <input type="text" name="primer_apellido" id="primer_apellido" class="form-control form-control-sm" placeholder="Primer Apellido" required>
+                </div>
+            </div>
+
+            <!-- Segundo Apellido -->
+            <div class="mb-2">
+                <label for="segundo_apellido" class="form-label">Segundo Apellido:</label>
+                <input type="text" name="segundo_apellido" id="segundo_apellido" class="form-control form-control-sm" placeholder="Segundo Apellido">
+            </div>
+
+            <!-- Correo -->
+            <div class="mb-2">
+                <label for="correo" class="form-label">Correo Electrónico:</label>
+                <input type="email" name="correo" id="correo" class="form-control form-control-sm" placeholder="Ej: ejemplo@correo.com" required>
+            </div>
+
+            <!-- Teléfono -->
+            <div class="mb-2">
+                <label for="telefono" class="form-label">Teléfono:</label>
+                <input type="tel" name="telefono" id="telefono" class="form-control form-control-sm" placeholder="Ej: +56912345678" required>
+            </div>
+
+            <!-- Fecha de Nacimiento -->
+            <div class="mb-2">
+                <label for="fecha_nacimiento" class="form-label">Fecha de Nacimiento:</label>
+                <input type="date" name="fecha_nacimiento" id="fecha_nacimiento" class="form-control form-control-sm" required>
+            </div>
+
+            <!-- Dirección -->
+            <div class="mb-2">
+                <label for="direccion" class="form-label">Dirección:</label>
+                <input type="text" name="direccion" id="direccion" class="form-control form-control-sm" placeholder="Ej: Calle 123, Ciudad" required>
+            </div>
+
+            <!-- Género -->
+            <div class="mb-2">
+                <label for="genero" class="form-label">Género:</label>
+                <select name="genero" id="genero" class="form-select form-select-sm" required>
+                    <option value="" selected>Seleccione...</option>
+                    <option value="M">Masculino</option>
+                    <option value="F">Femenino</option>
+                    <option value="NB">No binario</option>
+                </select>
+            </div>
+
+            <!-- Archivo -->
+            <div class="mb-2">
+                <label for="archivo" class="form-label">Subir Archivo (Opcional):</label>
+                <input type="file" name="archivo" id="archivo" class="form-control form-control-sm">
+            </div>
+
+            <!-- Botón Guardar -->
+            <button type="submit" class="btn btn-primary btn-sm w-100 mt-2">Guardar</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

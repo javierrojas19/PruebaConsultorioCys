@@ -1,0 +1,56 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Seleccionar Especialidad, Ubicación y Fecha</h2>
+
+    <!-- Mostrar mensaje de error si existe -->
+    {% if error_message %}
+        <div class="alert alert-danger" role="alert">
+            {{ error_message }}
+        </div>
+    {% endif %}
+
+    <!-- Formulario GET para recargar la página con la especialidad seleccionada -->
+    <form method="get" action="{% url 'pedir_hora' %}">
+        <div class="form-group mb-3">
+            <label for="especialidad">Especialidad Médica</label>
+            <select id="especialidad" name="especialidad" class="form-control" onchange="this.form.submit()">
+                <option value="">Selecciona una especialidad</option>
+                {% for especialidad in especialidades %}
+                    <option value="{{ especialidad }}" {% if especialidad == especialidad_seleccionada %}selected{% endif %}>
+                        {{ especialidad }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+        <!-- Botón de respaldo para navegadores sin JavaScript -->
+        <button type="submit" class="btn btn-secondary d-none">Seleccionar</button>
+    </form>
+
+    <!-- Formulario POST para seleccionar sede, fecha y buscar doctores -->
+    <form method="post" action="{% url 'pedir_hora' %}">
+        {% csrf_token %}
+        <input type="hidden" name="especialidad" value="{{ especialidad_seleccionada }}">
+
+        <div class="form-group mb-3">
+            <label for="sede">Región, Comuna o Centro de Preferencia</label>
+            <select id="sede" name="sede" class="form-control" required>
+                <option value="">Selecciona una sede</option>
+                {% for sede in sedes %}
+                    <option value="{{ sede.id_sede }}" {% if sede.id_sede == sede_seleccionada %}selected{% endif %}>
+                        {{ sede.clinica.nombre_clinica }} - {{ sede.comuna_sede }}, {{ sede.region_sede }}
+                    </option>
+                {% endfor %}
+            </select>            
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="fecha">Fecha de Preferencia</label>
+            <input type="date" id="fecha" name="fecha" class="form-control" value="{{ fecha_seleccionada }}" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Buscar Doctores</button>
+    </form>
+</div>
+{% endblock %}

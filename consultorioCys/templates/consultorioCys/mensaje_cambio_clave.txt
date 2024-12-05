@@ -1,0 +1,13 @@
+Hola,
+
+Recibiste este correo porque solicitaste restablecer tu contraseña en {{ site_name }}.
+Por favor, haz clic en el siguiente enlace para restablecer tu contraseña:
+
+{{ protocol }}://{{ domain }}/cambiar_clave/{{ uid }}/{{ token }}
+
+Si no solicitaste este cambio, puedes ignorar este correo.
+
+Gracias,
+El equipo de {{ site_name }}
+
+

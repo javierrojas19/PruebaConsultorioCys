@@ -1,0 +1,26 @@
+{% extends 'consultorioCys/base_generic.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Doctores Disponibles</h2>
+    
+    {% if doctores %}
+        <div class="doctor-list">
+            {% for doctor in doctores %}
+                <div class="doctor-card">
+                    <h5>{{ doctor.nombres_doctor }} {{ doctor.primer_apellido_doctor }}</h5>
+                    <p>Especialidad: {{ doctor.especialidad_doctor }}</p>
+                    <p>Contacto: {{ doctor.correo_doctor }} - Tel: {{ doctor.telefono_doctor }}</p>
+                    <!-- Aquí podrías agregar horarios de atención o más información del doctor -->
+                </div>
+                <hr>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No se encontraron doctores disponibles en esta ubicación y especialidad.</p>
+    {% endif %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+<div class="container mt-5 text-center">
+    <h2 class="mb-4">Cita Finalizada</h2>
+    <p>La cita con el paciente {{ cita.paciente.nombres_paciente }} ha sido marcada como finalizada.</p>
+    <a href="{% url 'inicio' %}" class="btn btn-primary mt-3">Volver al Inicio</a>
+</div>
+{% endblock %}

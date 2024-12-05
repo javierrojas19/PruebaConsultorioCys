@@ -1,0 +1,141 @@
+{% extends 'consultorioCys/base_generic.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="card shadow-lg mb-5">
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">
+                <i class="bi bi-person-circle me-2"></i> {{ paciente.nombres_paciente }} {{ paciente.primer_apellido_paciente }} {{ paciente.segundo_apellido_paciente }}
+            </h3>
+        </div>
+        <div class="card-body">
+            <p><strong>RUT:</strong> {{ paciente.rut_paciente }}</p>
+            <p><strong>Correo Electrónico:</strong> {{ paciente.correo_paciente }}</p>
+            <p><strong>Teléfono:</strong> {{ paciente.telefono_paciente }}</p>
+            <p><strong>Fecha de Nacimiento:</strong> {{ paciente.fecha_nacimiento_paciente }}</p>
+            <p><strong>Género:</strong> {{ paciente.get_genero_paciente_display }}</p>
+            <p><strong>Dirección:</strong> {{ paciente.direccion_paciente }}</p>
+        </div>
+    </div>
+
+    <!-- Cita Activa Seleccionada -->
+    <div class="mb-4">
+        <h3 class="text-primary">
+            <i class="bi bi-calendar-check me-2"></i> Cita Activa
+        </h3>
+        {% if cita_activa %}
+        <div class="card my-3">
+            <div class="card-body">
+                <p><strong>Doctor:</strong> Dr. {{ cita_activa.doctor.nombres_doctor }} {{ cita_activa.doctor.primer_apellido_doctor }}</p>
+                <p><strong>Fecha:</strong> {{ cita_activa.fecha_cita }}</p>
+                <p><strong>Hora:</strong> {{ cita_activa.hora_cita }}</p>
+                <form method="post" action="{% url 'finalizar_cita' cita_activa.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">
+                        <i class="bi bi-check-circle"></i> Finalizar Cita
+                    </button>
+                </form>
+            </div>
+        </div>
+        {% else %}
+        <p class="text-muted">No hay citas activas asociadas a este paciente.</p>
+        {% endif %}
+    </div>
+
+    <!-- Sección de Informes -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-primary">
+            <i class="bi bi-journal-text me-2"></i> Informes
+        </h2>
+        <a href="{% url 'crear_informe' paciente.rut_paciente %}" class="btn btn-outline-primary">
+            <i class="bi bi-plus-circle"></i> Agregar Informe
+        </a>
+    </div>
+
+    <table class="table table-hover table-striped align-middle shadow-sm">
+        <thead class="table-primary">
+            <tr>
+                <th>Título</th>
+                <th>Fecha</th>
+                <th>Notas</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for informe in informes %}
+            <tr>
+                <td>{{ informe.titulo_informe }}</td>
+                <td>{{ informe.fecha_informe|date:"d/m/Y H:i" }}</td>
+                <td>{{ informe.notas_doctor|default:"Sin notas" }}</td>
+                <td>
+                    <a href="{% url 'generar_pdf' informe.id_informe %}" class="btn btn-primary btn-sm" target="_blank">
+                        Descargar PDF
+                    </a>
+                    <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                        data-bs-target="#diagnosisModal-{{ informe.id_informe }}">
+                        <i class="bi bi-gear me-1"></i> Analizar Informe
+                    </button>
+                </td>
+            </tr>
+
+            <!-- Modal para este informe -->
+            <div class="modal fade" id="diagnosisModal-{{ informe.id_informe }}" tabindex="-1"
+                aria-labelledby="diagnosisModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Diagnósticos para "{{ informe.titulo_informe }}"</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="informe_id" value="{{ informe.id_informe }}">
+                            <div class="modal-body">
+                                <p><strong>Diagnóstico Actual del Doctor:</strong></p>
+                                <ul>
+                                    <li>{{ informe.diagnosis_suggestions.0.text }}</li>
+                                </ul>
+                                <p><strong>Sugerencias de Diagnósticos:</strong></p>
+                                <ul>
+                                    {% for suggestion in informe.diagnosis_suggestions %}
+                                    <li>
+                                        {{ suggestion.text }}
+                                        {% if suggestion.confidence %}
+                                        (Confianza: {{ suggestion.confidence }}%)
+                                        {% endif %}
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                                <div class="mt-3">
+                                    <label for="selectedDiagnosis-{{ informe.id_informe }}"
+                                        class="form-label">Seleccionar Diagnóstico</label>
+                                    <select class="form-select" name="selected_diagnosis"
+                                        id="selectedDiagnosis-{{ informe.id_informe }}" required>
+                                        {% for suggestion in informe.diagnosis_suggestions %}
+                                        <option value="{{ suggestion.text }}">
+                                            {{ suggestion.text }}
+                                            {% if suggestion.confidence %}
+                                            (Confianza: {{ suggestion.confidence }}%)
+                                            {% endif %}
+                                        </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Aplicar Diagnóstico</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <tr>
+                <td colspan="4" class="text-center text-muted">No hay informes disponibles.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

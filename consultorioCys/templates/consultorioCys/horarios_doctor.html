@@ -1,0 +1,13 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Horarios Disponibles para Dr. {{ doctor.nombres_doctor }} {{ doctor.primer_apellido_doctor }}</h2>
+    
+    <div class="d-flex flex-wrap justify-content-center">
+        {% for horario in horarios %}
+        <button type="button" class="btn btn-outline-primary m-2">{{ horario }}</button>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

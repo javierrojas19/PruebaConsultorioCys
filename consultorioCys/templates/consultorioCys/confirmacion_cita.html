@@ -1,0 +1,36 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-lg border-0">
+        <div class="card-header bg-primary text-white text-center">
+            <h2 class="mb-0">Mis Citas Activas</h2>
+        </div>
+        <div class="card-body">
+            {% if citas %}
+                {% for cita in citas %}
+                    <div class="card my-3">
+                        <div class="card-header">
+                            <strong>Cita con Dr. {{ cita.doctor.nombres_doctor }} {{ cita.doctor.primer_apellido_doctor }}</strong>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>Fecha:</strong> {{ cita.fecha_cita }}</p>
+                            <p><strong>Hora:</strong> {{ cita.hora_cita }}</p>
+                            <p><strong>Especialidad:</strong> {{ cita.doctor.especialidad_doctor }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="alert alert-info text-center">
+                    {{ error }}
+                </div>
+            {% endif %}
+        </div>
+        <div class="card-footer text-center">
+            <a href="{% url 'inicio' %}" class="btn btn-primary">
+                <i class="bi bi-house-fill me-2"></i>Volver al Inicio
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

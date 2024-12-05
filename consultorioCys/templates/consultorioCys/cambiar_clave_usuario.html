@@ -1,0 +1,115 @@
+{% extends 'consultorioCys/base_generic.html' %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center" style="min-height: calc(100vh - 120px);">
+  <div class="form-container shadow-lg p-4 rounded" style="max-width: 400px; background-color: #ffffff;">
+    <form method="POST">
+      {% csrf_token %}
+      <h3 class="text-center text-primary mb-4"><i class="bi bi-person-circle me-2"></i>Inicio de Sesión del Paciente</h3>
+
+      <!-- Campo de RUT -->
+      <div class="mb-3 position-relative">
+        <label for="rut" class="form-label text-primary">RUT del Paciente:</label>
+        <div class="input-group">
+          <input type="text" id="rut" class="form-control" name="rut" value="{{ paciente.rut_paciente }}"
+            placeholder="Ingresa el RUT del paciente" required>
+          <span class="position-absolute end-0 top-50 translate-middle-y me-2 toggle-password"
+            data-password-target="rut" style="cursor: pointer;">
+            <i class="bi bi-eye-slash text-primary"></i>
+          </span>
+        </div>
+      </div>
+
+      <!-- Campo de Nueva Contraseña -->
+      <div class="mb-3 position-relative">
+        <label for="nueva-clave" class="form-label text-primary">Nueva Contraseña:</label>
+        <div class="input-group">
+          <input type="password" id="nueva-clave" name="nueva_clave" class="form-control"
+            placeholder="Ingresa la nueva contraseña" required>
+          <span class="position-absolute end-0 top-50 translate-middle-y me-2 toggle-password"
+            data-password-target="nueva-clave" style="cursor: pointer;">
+            <i class="bi bi-eye-slash text-primary"></i>
+          </span>
+        </div>
+      </div>
+
+      <!-- Campo de Confirmar Nueva Contraseña -->
+      <div class="mb-3 position-relative">
+        <label for="confirmar-clave" class="form-label text-primary">Confirmar Nueva Contraseña:</label>
+        <div class="input-group">
+          <input type="password" id="confirmar-clave" name="confirmar_clave" class="form-control"
+            placeholder="Confirma la nueva contraseña" required>
+          <span class="position-absolute end-0 top-50 translate-middle-y me-2 toggle-password"
+            data-password-target="confirmar-clave" style="cursor: pointer;">
+            <i class="bi bi-eye-slash text-primary"></i>
+          </span>
+        </div>
+      </div>
+
+      <!-- Botón de Inicio de Sesión -->
+      <div class="d-grid">
+        <button type="submit" class="btn btn-primary">
+          <i class="bi bi-box-arrow-in-right me-2"></i>Iniciar Sesión
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Script para Mostrar/Ocultar Contenido -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const togglePasswordElements = document.querySelectorAll('.toggle-password');
+
+    togglePasswordElements.forEach(toggle => {
+      toggle.addEventListener('click', () => {
+        const targetId = toggle.getAttribute('data-password-target');
+        const inputField = document.getElementById(targetId);
+
+        if (inputField) {
+          const type = inputField.getAttribute('type') === 'password' || inputField.getAttribute('type') === 'text' ? 
+            (inputField.getAttribute('type') === 'password' ? 'text' : 'password') : inputField.getAttribute('type');
+          inputField.setAttribute('type', type);
+
+          // Cambiar el ícono
+          toggle.querySelector('i').classList.toggle('bi-eye');
+          toggle.querySelector('i').classList.toggle('bi-eye-slash');
+        }
+      });
+    });
+  });
+</script>
+
+<!-- Estilos Personalizados -->
+<style>
+  body {
+    background-color: #f8f9fa;
+  }
+
+  .form-container {
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #ffffff;
+  }
+
+  .form-control {
+    border-radius: 5px;
+  }
+
+  .btn {
+    border-radius: 5px;
+  }
+
+  .btn-primary:hover {
+    background-color: #084298;
+  }
+
+  .toggle-password {
+    font-size: 1.2rem;
+  }
+
+  .toggle-password:hover {
+    color: #084298;
+  }
+</style>
+{% endblock %}

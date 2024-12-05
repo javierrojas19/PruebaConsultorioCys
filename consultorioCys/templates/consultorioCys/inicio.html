@@ -1,0 +1,109 @@
+{% extends 'consultorioCys/base_generic.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      {% block title %}
+        Inicio | Consultorio Cys
+      {% endblock %}
+    </title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+
+    <link rel="stylesheet" href="/static/consultorioCys/css/general.css" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+
+    <link rel="shortcut icon" href="{% static 'consultorioCys/img/hearth-back.png' %}" type="image/x-icon" />
+  </head>
+
+  <body>
+    {% block content %}
+      <section class="bg-primary text-white text-center py-5">
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-lg-6 text-lg-start mb-4 mb-lg-0">
+              <h1 class="display-4">Bienvenidos a Consultorio Cys</h1>
+              <p class="lead text-uppercase mt-3 mb-4">Salud conectada, datos seguros para tu bienestar.</p>
+              <div>
+                {% if user.is_authenticated %}
+                  <a href="{% url 'historial_personal' %}" class="btn btn-warning btn-lg me-2">Mis Informes</a>
+                {% else %}
+                  <a href="{% url 'login' %}" class="btn btn-warning btn-lg me-2">Iniciar sesión</a>
+                {% endif %}
+                <a href="/acercade" class="btn btn-outline-light btn-lg">Más Información</a>
+              </div>
+            </div>
+            <div class="col-lg-6 d-flex justify-content-center">
+              <div style="position: relative; max-width: 100%;">
+                <img src="consultorioCys/static/consultorioCys/img/vec2.png" class="img-fluid rounded" alt="brain" style="max-width: 100%; height: auto;" />
+                <div style="position: absolute; bottom: 10px; right: 10px; padding: 2px 6px; font-size: 10px; border-radius: 3px;">
+                  Designed by <a href="https://www.freepik.com" target="_blank" style="text-decoration: none; color: inherit;">Freepik</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-light py-5 text-center">
+        <div class="container">
+          <h2 class="mb-4">Nuestros Servicios</h2>
+          <div class="row">
+            <div class="col-md-4 mb-3">
+              <i class="bi bi-heart-pulse fs-1 text-primary"></i>
+              <h4 class="mt-3">Historial centralizado</h4>
+              <p>Proporcionamos un solo lugar donde puedes tener acceso a todo tu historial médico.</p>
+            </div>
+            <div class="col-md-4 mb-3">
+              <i class="bi bi-hospital fs-1 text-primary"></i>
+              <h4 class="mt-3">Mejor atencion.</h4>
+              <p>Ofrecemos herramientas de IA para ayudar al médico a brindarte una atención más rápida y mejor.</p>
+            </div>
+            <div class="col-md-4 mb-3">
+              <i class="bi bi-clipboard2-pulse fs-1 text-primary"></i>
+              <h4 class="mt-3">AI.</h4>
+              <p style:color:red>Tenemos herramientas de IA para organizar, resumir y consultar tu historial médico.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- footer -->
+
+   
+
+      <!-- animacion menu -->
+      <script>
+        window.addEventListener('load', function () {
+          const navbarContent = document.getElementById('navbarSupportedContent')
+        
+          if (window.innerWidth >= 992) {
+            // Pantallas grandes: lg y mayores (Bootstrap considera "lg" a partir de 992px)
+            navbarContent.classList.add('show')
+          } else {
+            navbarContent.classList.remove('show')
+          }
+        })
+        
+        window.addEventListener('resize', function () {
+          const navbarContent = document.getElementById('navbarSupportedContent')
+        
+          if (window.innerWidth >= 992) {
+            navbarContent.classList.add('show')
+          } else {
+            navbarContent.classList.remove('show')
+          }
+        })
+      </script>
+
+      <!-- fin animacion menu -->
+    {% endblock %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+  </body>
+</html>

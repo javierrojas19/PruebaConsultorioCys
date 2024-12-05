@@ -1,0 +1,24 @@
+{% extends 'consultorioCys/base_generic.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center">Resumen de Cita</h2>
+    <p class="text-center">Su cita ha sido agendada exitosamente. Aquí están los detalles:</p>
+
+    <div class="card mt-4">
+        <div class="card-body">
+            <h5 class="card-title">Detalles de la Cita</h5>
+            <p><strong>Paciente:</strong> {{ cita.paciente.nombres_paciente }} {{ cita.paciente.primer_apellido_paciente }}</p>
+            <p><strong>Doctor:</strong> Dr. {{ cita.doctor.nombres_doctor }} {{ cita.doctor.primer_apellido_doctor }} ({{ cita.doctor.especialidad_doctor }})</p>
+            <p><strong>Fecha:</strong> {{ cita.fecha_cita }}</p>
+            <p><strong>Hora:</strong> {{ cita.hora_cita }}</p>
+            <p><strong>Motivo de la consulta:</strong> {{ cita.motivo_consulta }}</p>
+            <p><strong>Ubicación:</strong> {{ cita.doctor.doctorclinica_set.first.sede.clinica.nombre_clinica }}, {{ cita.doctor.doctorclinica_set.first.sede.comuna_sede }}, {{ cita.doctor.doctorclinica_set.first.sede.region_sede }}</p>
+        </div>
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="{% url 'pedir_hora' %}" class="btn btn-primary">Volver a la selección de área</a>
+    </div>
+</div>
+{% endblock %}

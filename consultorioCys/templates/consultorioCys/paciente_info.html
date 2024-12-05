@@ -1,0 +1,125 @@
+{% extends 'consultorioCys/base_generic.html' %}
+{% block content %}
+<div class="container mt-5">
+  <div class="row g-4">
+      <!-- Información del Paciente -->
+      <div class="col-lg-8">
+          <div class="card shadow-lg border-0" style="background-color: #e3f2fd;">
+              <div class="card-header text-white text-center py-3" style="background-color: #0d6efd;">
+                  <h2 class="fw-bold"><i class="bi bi-person-circle me-2"></i> Información del Paciente</h2>
+              </div>
+              <div class="card-body">
+                  <p><strong>Nombre Completo:</strong> 
+                      {{ paciente.nombres_paciente }} {{ paciente.primer_apellido_paciente }} {{ paciente.segundo_apellido_paciente }}
+                  </p>
+                  <p><strong>RUT:</strong> {{ paciente.rut_paciente }}</p>
+                  <p><strong>Email:</strong> {{ paciente.correo_paciente }}</p>
+                  <p><strong>Teléfono:</strong> {{ paciente.telefono_paciente }}</p>
+
+                  <h3 class="mt-4 text-primary fw-bold">Informes del Paciente</h3>
+                  {% if informes %}
+                      <ul class="list-group mt-3">
+                          {% for informe in informes %}
+                          <li class="list-group-item">
+                              <strong>Fecha:</strong> {{ informe.fecha_informe }} <br>
+                              <strong>Título:</strong> {{ informe.titulo_informe }} <br>
+                              <strong>Descripción:</strong> {{ informe.descripcion_informe }}
+                              {% if informe.archivo %}
+                              <div class="mt-2">
+                                  <a href="{{ informe.archivo.url }}" class="btn btn-outline-primary" download>
+                                      <i class="bi bi-download me-1"></i> Descargar Informe
+                                  </a>
+                              </div>
+                              {% endif %}
+                          </li>
+                          {% endfor %}
+                      </ul>
+                  {% else %}
+                      <p class="text-warning mt-3"><i class="bi bi-exclamation-circle me-1"></i> No se encontraron informes para este paciente.</p>
+                  {% endif %}
+              </div>
+              <div class="card-footer text-center py-3">
+                  <a href="{% url 'doctor_dashboard' %}" class="btn btn-primary">
+                      <i class="bi bi-arrow-left-circle me-1"></i> Volver al Dashboard
+                  </a>
+              </div>
+          </div>
+      </div>
+
+      <!-- Sección para el Chat de IA -->
+      <div class="col-lg-4">
+          <div class="card shadow-lg border-0" style="background-color: #f0f4f8;">
+              <div class="card-header text-center text-white py-3" style="background-color: #0d6efd;">
+                  <h4><i class="bi bi-fan me-2"></i> IA</h4>
+              </div>
+              
+              <div class="card-body chat-body" style="height: 400px; overflow-y: auto;">
+                  <div id="chat-messages" class="mb-3"></div>
+                  <div class="input-group mb-3">
+                      <input type="text" id="userInput" class="form-control" placeholder="Escribe tu mensaje..." />
+                      <button class="btn btn-primary" id="sendMessageBtn">
+                          <i class="bi bi-send"></i>
+                      </button>
+                  </div>
+              </div>
+              
+              <button class="btn btn-outline-primary " id="predefinedMessageBtn">
+                <i></i> Dame su historial
+            </button>
+            <button class="btn btn-outline-primary" id="predefinedMessageBtn2">
+              <i></i> ¿Tiene enfermedades geneticas?
+          </button>
+          <button class="btn btn-outline-primary" id="predefinedMessageBtn3">
+            <i></i> Su familia posee x enfermedad 
+        </button>
+          </div>
+          
+      </div>
+  </div>
+</div>
+
+<!-- Bootstrap Icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
+
+<!-- JavaScript para el Chat -->
+<script>
+  const chatMessages = document.getElementById('chat-messages');
+  const userInput = document.getElementById('userInput');
+  const sendMessageBtn = document.getElementById('sendMessageBtn');
+  const predefinedMessageBtn = document.getElementById('predefinedMessageBtn');
+
+  // Función para agregar mensajes al chat
+  function addMessage(content, isUser = true) {
+      const messageClass = isUser ? 'alert alert-primary text-end' : 'alert alert-secondary';
+      const messageHTML = `<div class="${messageClass}">${content}</div>`;
+      chatMessages.innerHTML += messageHTML;
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+
+  // Enviar mensaje desde el input
+  sendMessageBtn.addEventListener('click', () => {
+      const message = userInput.value.trim();
+      if (message) {
+          addMessage(message);
+          userInput.value = '';
+
+          // Simulación de respuesta de IA
+          setTimeout(() => {
+              addMessage('Soy tu asistente de IA. ¿Cómo puedo ayudarte hoy?', false);
+          }, 1000);
+      }
+  });
+
+  // Enviar mensaje predefinido al presionar el botón
+  predefinedMessageBtn.addEventListener('click', () => {
+      addMessage('Aquí tienes un resumen del historial médico del paciente: Alergias: Penicilina y polen. Enfermedades crónicas: Hipertensión arterial y diabetes tipo 2. Cirugías realizadas: Apendicectomía en 2015. Tratamiento actual: Enalapril 10 mg, una vez al día. Metformina 850 mg, dos veces al día.', false);
+  });
+  predefinedMessageBtn2.addEventListener('click', () => {
+    addMessage('Así es. En los historiales 3 y 5 también se registra "x", lo que sugiere que podría estar relacionado con este caso.', false);
+});
+predefinedMessageBtn3.addEventListener('click', () => {
+  addMessage('No hay registros de antecedentes familiares en la base de datos.', false);
+});
+</script>
+
+{% endblock %}

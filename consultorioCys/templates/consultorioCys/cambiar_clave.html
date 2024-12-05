@@ -1,0 +1,35 @@
+{% extends 'base_generic.html' %}
+{% block content %}
+<div class="d-flex justify-content-center align-items-center bg-light" style="min-height: 60vh;">
+    <div class="card shadow-lg p-4 border-0" style="max-width: 400px; width: 100%;">
+        <!-- Encabezado -->
+        <div class="text-center mb-4">
+            <h4 class="text-primary fw-bold">
+                <i class="bi bi-shield-lock me-2"></i>Restablecer Contraseña
+            </h4>
+        </div>
+        <!-- Cuerpo -->
+        <div class="card-body">
+            <form method="POST" action="{% url 'cambiar_clave' uidb64=uidb64 token=token %}">
+                {% csrf_token %}
+                <!-- Campo Nueva Contraseña -->
+                <div class="mb-3">
+                    <label for="new-password" class="form-label text-primary fw-semibold">Nueva Contraseña</label>
+                    <input type="password" id="new-password" name="new_password" class="form-control shadow-sm" placeholder="Ingresa tu nueva contraseña" required>
+                </div>
+                <!-- Campo Confirmar Contraseña -->
+                <div class="mb-3">
+                    <label for="confirm-password" class="form-label text-primary fw-semibold">Confirmar Contraseña</label>
+                    <input type="password" id="confirm-password" name="confirm_password" class="form-control shadow-sm" placeholder="Confirma tu nueva contraseña" required>
+                </div>
+                <!-- Botón de Enviar -->
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary shadow-sm">
+                        <i class="bi bi-arrow-clockwise me-2"></i>Restablecer Contraseña
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Seleccionar Doctor</h2>
+
+    <p class="text-center">Especialidad: <strong>{{ especialidad }}</strong> | Fecha: <strong>{{ fecha }}</strong></p>
+    
+    <!-- Lista de doctores disponibles -->
+    <div class="list-group">
+        {% for entry in doctores %}
+            <div class="list-group-item">
+                <h5>Dr. {{ entry.doctor.nombres_doctor }} {{ entry.doctor.primer_apellido_doctor }} {{ entry.doctor.segundo_apellido_doctor }}</h5>
+                <p>Especialidad: {{ entry.doctor.especialidad_doctor }}</p>
+                
+                <!-- Formulario para agendar una cita con el doctor -->
+                <form method="post" action="{% url 'confirmacion_cita' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="doctor_id" value="{{ entry.doctor.rut_doctor }}">
+                    <input type="hidden" name="fecha" value="{{ fecha }}">
+                    <div class="form-group">
+                        <label for="hora_{{ entry.doctor.rut_doctor }}">Seleccione una hora:</label>
+                        <select id="hora_{{ entry.doctor.rut_doctor }}" name="hora" class="form-control" required>
+                            {% for hora in entry.horas_disponibles %}
+                                <option value="{{ hora|time:'H:i' }}">{{ hora|time:'H:i' }}</option>
+                            {% empty %}
+                                <option disabled>No hay horas disponibles</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-2">Agendar Cita</button>
+                </form>
+            </div>
+        {% empty %}
+            <p>No hay doctores disponibles para la especialidad y sede seleccionadas.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
